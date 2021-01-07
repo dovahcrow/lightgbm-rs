@@ -1,14 +1,14 @@
-#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals, unused)]
-
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-
+use crate::bindings::{
+    BoosterHandle, FastConfigHandle, LGBM_BoosterCreateFromModelfile, LGBM_BoosterGetNumClasses, LGBM_BoosterLoadModelFromString, LGBM_BoosterPredictForMatSingleRow,
+    LGBM_BoosterPredictForMatSingleRowFast, LGBM_BoosterPredictForMatSingleRowFastInit, LGBM_GetLastError, C_API_DTYPE_FLOAT32, C_API_DTYPE_FLOAT64, C_API_DTYPE_INT32,
+    C_API_DTYPE_INT64, C_API_PREDICT_CONTRIB, C_API_PREDICT_LEAF_INDEX, C_API_PREDICT_NORMAL, C_API_PREDICT_RAW_SCORE,
+};
 use crate::errors::LightGBMError;
 use failure::Error;
 use fehler::{throw, throws};
 use libc::{c_int, c_void};
 use std::ffi::{CStr, CString};
 use std::ptr::null_mut;
-
 const C_API_IS_ROW_MAJOR: c_int = 1;
 
 #[repr(i32)]
@@ -66,16 +66,7 @@ pub fn booster_get_num_classes(handle: BoosterHandle) -> i32 {
 }
 
 #[throws(Error)]
-pub fn booster_predict_for_mat_single_row(
-    handle: BoosterHandle,
-    data: &[f64],
-    predict_type: PredictType,
-    start_iteration: i32,
-    num_iteration: i32,
-    data_type: DType,
-    params: &str,
-    out: &mut [f64],
-) {
+pub fn booster_predict_for_mat_single_row(handle: BoosterHandle, data: &[f64], predict_type: PredictType, start_iteration: i32, num_iteration: i32, params: &str, out: &mut [f64]) {
     let mut outlen: i64 = 0;
     let params = CString::new(params)?;
 

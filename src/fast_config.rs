@@ -1,4 +1,4 @@
-use crate::sys::{FastConfigHandle, LGBM_FastConfigFree};
+use crate::bindings::{FastConfigHandle, LGBM_FastConfigFree};
 use std::marker::PhantomData;
 
 #[derive(Clone)]

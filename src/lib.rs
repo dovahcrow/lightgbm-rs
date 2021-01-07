@@ -1,15 +1,17 @@
+mod bindings;
 mod errors;
 mod fast_config;
 mod sys;
 
+use crate::bindings::{BoosterHandle, LGBM_BoosterFree};
 pub use crate::fast_config::FastConfig;
+use crate::sys::{
+    booster_create_from_modelfile, booster_get_num_classes, booster_load_model_from_string, booster_predict_for_mat_single_row, booster_predict_for_mat_single_row_fast,
+    booster_predict_for_mat_single_row_fast_init,
+};
 pub use crate::sys::{DType, PredictType};
 use failure::Error;
 use fehler::throws;
-use sys::{
-    booster_create_from_modelfile, booster_get_num_classes, booster_load_model_from_string, booster_predict_for_mat_single_row, booster_predict_for_mat_single_row_fast,
-    booster_predict_for_mat_single_row_fast_init, BoosterHandle, LGBM_BoosterFree,
-};
 
 pub struct LightGBM {
     handle: BoosterHandle,
@@ -48,7 +50,7 @@ impl LightGBM {
         let params = params.into().unwrap_or("");
 
         let mut out = vec![0.; self.num_classes()? as usize * 1];
-        booster_predict_for_mat_single_row(self.handle, data, predict_type, start_iteration, num_iteration, DType::Float64, params, out.as_mut())?;
+        booster_predict_for_mat_single_row(self.handle, data, predict_type, start_iteration, num_iteration, params, out.as_mut())?;
         out
     }
 
