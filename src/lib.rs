@@ -7,7 +7,7 @@ pub use crate::sys::{DType, PredictType};
 use failure::Error;
 use fehler::throws;
 use sys::{
-    booster_create_from_modelfile, booster_get_num_classes, booster_predict_for_mat_single_row, booster_predict_for_mat_single_row_fast,
+    booster_create_from_modelfile, booster_get_num_classes, booster_load_model_from_string, booster_predict_for_mat_single_row, booster_predict_for_mat_single_row_fast,
     booster_predict_for_mat_single_row_fast_init, BoosterHandle, LGBM_BoosterFree,
 };
 
@@ -18,8 +18,15 @@ pub struct LightGBM {
 
 impl LightGBM {
     #[throws(Error)]
-    pub fn load_from_file(filename: &str) -> LightGBM {
+    pub fn from_file(filename: &str) -> LightGBM {
         let (handle, ntrees) = booster_create_from_modelfile(filename)?;
+
+        LightGBM { handle, ntrees }
+    }
+
+    #[throws(Error)]
+    pub fn from_string(model_def: &str) -> LightGBM {
+        let (handle, ntrees) = booster_load_model_from_string(model_def)?;
 
         LightGBM { handle, ntrees }
     }

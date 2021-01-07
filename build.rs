@@ -37,7 +37,7 @@ fn add_search_path() {
         if path.trim().len() == 0 {
             continue;
         }
-        println!("cargo:rustc-link-search=native={}", path);
+        println!("cargo:rustc-link-search={}", path);
     }
 }
 
@@ -47,7 +47,7 @@ fn add_search_path() {
         if path.trim().len() == 0 {
             continue;
         }
-        println!("cargo:rustc-link-search=native={}", path);
+        println!("cargo:rustc-link-search={}", path);
     }
 }
 

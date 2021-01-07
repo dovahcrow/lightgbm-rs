@@ -43,6 +43,18 @@ pub fn booster_create_from_modelfile(filename: &str) -> (BoosterHandle, i32) {
 }
 
 #[throws(Error)]
+pub fn booster_load_model_from_string(model: &str) -> (BoosterHandle, i32) {
+    let mut ntrees: c_int = -1;
+    let mut handle = null_mut() as BoosterHandle;
+
+    if unsafe { LGBM_BoosterLoadModelFromString(model.as_ptr() as *const i8, &mut ntrees, &mut handle) } != 0 {
+        throw!(get_last_error());
+    };
+
+    (handle, ntrees)
+}
+
+#[throws(Error)]
 pub fn booster_get_num_classes(handle: BoosterHandle) -> i32 {
     let mut num = 0;
 
