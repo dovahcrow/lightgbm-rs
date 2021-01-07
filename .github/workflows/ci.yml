@@ -10,9 +10,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: recursive
-      - run: wget https://dovahcrow.s3-us-west-2.amazonaws.com/lib_lightgbm.so
-      - run: echo "LD_LIBRARY_PATH=$PWD" >> $GITHUB_ENV
-      - run: echo $LD_LIBRARY_PATH
       - uses: icepuma/rust-action@master
         with:
           args: cargo test --features ci
