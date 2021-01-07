@@ -7,7 +7,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - run: wget https://dovahcrow.s3-us-west-2.amazonaws.com/lib_lightgbm.so
       - run: echo "LD_LIBRARY_PATH=$PWD" >> $GITHUB_ENV
       - run: echo $LD_LIBRARY_PATH
