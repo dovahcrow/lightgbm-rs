@@ -45,10 +45,7 @@ impl LightGBM {
     where
         T: Into<Option<&'a str>>,
     {
-        let params = match params.into() {
-            Some(a) => a,
-            None => "",
-        };
+        let params = params.into().unwrap_or("");
 
         let mut out = vec![0.; self.num_classes()? as usize * 1];
         booster_predict_for_mat_single_row(self.handle, data, predict_type, start_iteration, num_iteration, DType::Float64, params, out.as_mut())?;
@@ -68,10 +65,7 @@ impl LightGBM {
     where
         T: Into<Option<&'a str>>,
     {
-        let params = match params.into() {
-            Some(a) => a,
-            None => "",
-        };
+        let params = params.into().unwrap_or("");
         let fchandle = booster_predict_for_mat_single_row_fast_init(self.handle, predict_type, start_iteration, num_iteration, data_type, ncol, params)?;
         FastConfig::new(fchandle)
     }

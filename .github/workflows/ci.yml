@@ -1,0 +1,17 @@
+name: lightgbm-rs CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - run: wget https://dovahcrow.s3-us-west-2.amazonaws.com/lib_lightgbm.so
+      - run: echo "LD_LIBRARY_PATH=$PWD" >> $GITHUB_ENV
+      - run: echo $LD_LIBRARY_PATH
+      - run: sudo apt-get install clang llvm
+      - uses: icepuma/rust-action@master
+        with:
+          args: cargo test
