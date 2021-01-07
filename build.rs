@@ -1,7 +1,10 @@
 fn main() {
     add_search_path();
     add_llvm_path();
-
+    if cfg!(feature = "ci") {
+        let dst = cmake::Config::new("LightGBM").pic(true).build();
+        println!("cargo:rustc-link-search={}/lib", dst.display());
+    }
     println!("cargo:rustc-link-lib=_lightgbm");
 }
 

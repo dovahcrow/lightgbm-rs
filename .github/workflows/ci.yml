@@ -13,4 +13,4 @@ jobs:
       - run: echo $LD_LIBRARY_PATH
       - uses: icepuma/rust-action@master
         with:
-          args: cargo test
+          args: cargo test --features ci
