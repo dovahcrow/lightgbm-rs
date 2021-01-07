@@ -1,0 +1,4 @@
+/target
+/LightGBM
+*.lgbm
+lib_lightgbm.so

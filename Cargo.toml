@@ -1,0 +1,19 @@
+[package]
+name = "lightgbm"
+version = "0.1.0"
+authors = ["Weiyuan Wu <youngw@sfu.ca>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+libc = "0.2"
+fehler = "1"
+failure = "0.1"
+thiserror = "1"
+
+[build-dependencies]
+bindgen = "0.53.1"
