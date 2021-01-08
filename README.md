@@ -1,4 +1,4 @@
-# LightGBM Rust binding
+# LightGBM Binding for Rust ![CI](https://github.com/dovahcrow/lightgbm-rs/workflows/lightgbm-rs%20CI/badge.svg)
 
 
 This binding currently works for lightgbm 3.1.1.
