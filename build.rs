@@ -1,19 +1,23 @@
 fn main() {
     add_search_path();
     add_llvm_path();
+    build_lightgbm();
+}
 
-    if cfg!(feature = "static") {
-        let dst = cmake::Config::new("LightGBM").define("BUILD_STATIC_LIB", "ON").build();
-        println!("cargo:rustc-link-search={}/lib", dst.display());
-        println!("cargo:rustc-link-lib=stdc++");
-        println!("cargo:rustc-link-lib=gomp");
-        println!("cargo:rustc-link-lib=static=_lightgbm");
-    }
-    if cfg!(feature = "dynamic") {
-        let dst = cmake::Config::new("LightGBM").pic(true).build();
-        println!("cargo:rustc-link-search={}/lib", dst.display());
-        println!("cargo:rustc-link-lib=_lightgbm");
-    }
+#[cfg(feature = "static")]
+fn build_lightgbm() {
+    let dst = cmake::Config::new("LightGBM").define("BUILD_STATIC_LIB", "ON").build();
+    println!("cargo:rustc-link-search={}/lib", dst.display());
+    println!("cargo:rustc-link-lib=static=_lightgbm");
+    println!("cargo:rustc-link-lib=stdc++");
+    println!("cargo:rustc-link-lib=gomp");
+}
+
+#[cfg(feature = "dynamic")]
+fn build_lightgbm() {
+    let dst = cmake::Config::new("LightGBM").pic(true).build();
+    println!("cargo:rustc-link-search={}/lib", dst.display());
+    println!("cargo:rustc-link-lib=_lightgbm");
 }
 
 #[cfg(not(target_os = "windows"))]
