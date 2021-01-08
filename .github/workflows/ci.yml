@@ -12,4 +12,4 @@ jobs:
           submodules: recursive
       - uses: icepuma/rust-action@master
         with:
-          args: cargo test --features ci
+          args: cargo test
