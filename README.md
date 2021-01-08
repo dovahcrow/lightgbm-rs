@@ -7,13 +7,14 @@ The library is currently under heavy development. APIs are subject to change and
 
 # Usage
 
-* Build your own lightgbm according to the instruction at [here](https://lightgbm.readthedocs.io/en/latest/Installation-Guide.html).
-* Copy `lib_lightgbm.so` to your library search path. On linux it would be `/usr/local/lib`. Or simply
-  set `LD_LIBRARY_PATH` to the folder contains `lib_lightgbm.so`.
+* Make sure your machine has cmake, libstdc++ and libgomp installed.
 * Add this to your project's `Cargo.toml`.
   ```toml
   lightgbm = { version = "0.0.1", git = "https://github.com/dovahcrow/lightgbm-rs" }
   ```
+
+By default, the lightgbm library is static linked to your binary. If you'd like to use the dynamic lib,
+set the dynamic feature of `lightgbm-rs`.
 
 # Documentation
 
