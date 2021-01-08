@@ -18,6 +18,10 @@ pub struct LightGBM {
     ntrees: i32,
 }
 
+// According to https://github.com/microsoft/LightGBM/issues/2201, BoosterHandle is Sync + Send
+unsafe impl Send for LightGBM {}
+unsafe impl Sync for LightGBM {}
+
 impl LightGBM {
     #[throws(Error)]
     pub fn from_file(filename: &str) -> LightGBM {
